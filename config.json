@@ -1,0 +1,42 @@
+{
+  "inbounds": [{
+    "port": 1111,  // v2Ray 【监听端口】，自定义
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "4d3d26ca-276e-45f3-b5a5-b8c27b7ad631",  // 您的【用户id】，安装 v2ray 自动生成
+          "level": 1,   // 
+          "alterId": 64 // 1~64  数字越大，性能越差，网上看到一个人说的，没验证过
+        }
+      ]
+    },
+    
+    // streamSettings 流量伪装的配置，默认是没有的
+    // 如果不伪装，仅修改  监听端口、level、alterId  即可使用
+    "streamSettings": {
+        "network": "ws",        // 通讯协议
+        "wsSettings": {
+          "path":"/anonymous"     // 需要跟你新建的伪装目录同名
+        }
+      },
+      "listen": "0.0.0.0"     // 仅允许本地通过此协议访问
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  },{
+    "protocol": "blackhole",
+    "settings": {},
+    "tag": "blocked"
+  }],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "direct"
+      }
+    ]
+  }
+}
