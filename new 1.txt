@@ -1,0 +1,21 @@
+apt update
+apt install zip wget nano -y
+wget http://iscute.cn/tar/chfs/2.0/chfs-linux-amd64-2.0.zip
+unzip chfs-linux-amd64-2.0.zip
+chmod +x chfs
+nohup ./chfs --path="/home" --port=9999 >/dev/null 2>&1 &
+wget -q https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+unzip ngrok-stable-linux-amd64.zip
+chmod +x ./ngrok
+./ngrok authtoken 1fftsZVphhCuMwhe7uVWkxW8zHx_2XwBkSWQ5M5yxEFfYPitV
+nohup ./ngrok tcp 9999 >/dev/null 2>&1 &
+wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.1/mkcert-v1.4.1-linux-amd64
+nohup /mnt/mtdblock/sbin/v2ray -c /mnt/mtdblock/sbin/config.json >/dev/null 2>&1 &
+
+
+./chfs --path="/mnt/mtdblock/sbin" --port=9999
+
+udpsvd -vE 0.0.0.0 69 tftpd /mnt/mtdblock/sbin
+netstat -antup
+
+tcpsvd -vE 0.0.0.0 21 /mnt/mtdblock/sbin/bin/ftpd /mnt/mtdblock/sbin
